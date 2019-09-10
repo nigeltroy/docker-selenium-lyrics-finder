@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title> Nigel's Lyrics Finder </title>
+</head>
+
+<body>
+
+    <form action="/inputSong" method="POST">
+        <h5> Find your song's lyrics: </h5>
+        <input type="text" name="song">
+        <input type="submit">
+    </form>
+    <h3> {{nam}} </h3>
+    {% for line in lyr %}
+        {% if line != '' %}
+            {{ line }} <br>
+        {% endif %}
+    {% endfor %}
+
+</body>
+
+</html>
