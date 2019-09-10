@@ -23,15 +23,20 @@ def retrieveLyrics(songName = 0):
         expand_button.click() # simulate click to expand lyrics
 
         lyrics = [i.text for i in driver.find_elements_by_xpath("//span[@jsname='YS01Ge']")]
-        if not songName:
+
+        name = driver.find_element_by_xpath("//div[@class='kno-ecr-pt kno-fb-ctx PZPZlf gsmt']").text
+        author = driver.find_element_by_xpath("//div[@class='wwUB2c kno-fb-ctx PZPZlf']").text
+
+        '''if not songName:
             name = [i.capitalize() for i in sys.argv[1:]]
         else:
-            name = [i.capitalize() for i in songName.split(" ")]
+            name = [i.capitalize() for i in songName.split(" ")]'''
     except:
         lyrics = ["Try another input: perhaps your song is too obscure?"]
-        name = ["No input/no lyrics found"]
+        name = "No input/no lyrics found"
+        author = ""
     
-    return [name, lyrics]
+    return [name, lyrics, author]
 
 app = Flask(__name__)
 
@@ -39,11 +44,11 @@ app = Flask(__name__)
 def inputSong():
     lyricsIn = request.form['song']
     ans = retrieveLyrics(lyricsIn)
-    return render_template('main.html', nam=' '.join(ans[0]), lyr=ans[1])
+    return render_template('main.html', nam=ans[0], lyr=ans[1], aut=ans[2])
 
 @app.route("/")
 def lyricsPrint():
-    return render_template('main.html', nam=' '.join(retrieveLyrics()[0]), lyr=retrieveLyrics()[1])
+    return render_template('main.html', nam=retrieveLyrics()[0], lyr=retrieveLyrics()[1], aut=retrieveLyrics()[2])
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
