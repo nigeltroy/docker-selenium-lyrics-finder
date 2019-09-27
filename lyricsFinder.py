@@ -2,6 +2,7 @@ from selenium import webdriver
 import sys
 from flask import Flask, request, render_template
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import os
 
 def retrieveLyrics(songName = 0):
     try:
